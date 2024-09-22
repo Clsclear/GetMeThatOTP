@@ -8,9 +8,7 @@ Accept Terms
 
 To get started, you need to accept our Terms and Conditions. Please review and accept them by clicking the link below:
 
-.. code-block:: console
-
-  :doc:`Terms and Conditions <terms>`
+:doc:`Terms and Conditions <terms>`
 
 Registering
 -----------
