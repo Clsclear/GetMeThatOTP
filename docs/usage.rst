@@ -73,7 +73,7 @@ The **CRYPTO** section allows you to manage OTPs for cryptocurrency platforms. S
 📲🌉 BRIDGE CALLS
 -----------------
 
-Use the **BRIDGE CALLS** section to set up and manage OTPs for services that require voice-based authentication or bridge calls.
+Use the **BRIDGE CALLS** section to set up and bridge two calls together. This is useful when you want to speak to someone from a custom caller ID of your choice.
 
 🛠 CUSTOM
 ---------
@@ -88,7 +88,7 @@ The **PLANS** section provides details about your current subscription plan. You
 👤 ACCOUNT
 ----------
 
-The **ACCOUNT** section allows you to view and manage your account details. You can update your profile, change your password, and manage other personal information here.
+The **ACCOUNT** section allows you to view and manage your account details. You can change your password here.
 
 🆘 SUPPORT
 ----------
