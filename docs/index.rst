@@ -1,4 +1,4 @@
-Welcome to Your Project's documentation!
+Welcome to "Get Me That OTP" bot documentation!
 ========================================
 
 .. toctree::
