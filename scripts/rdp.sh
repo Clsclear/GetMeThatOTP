@@ -2,6 +2,8 @@
 
 # Set default values
 chrome_remote_desktop_url="https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
+username="iamunicode"
+password="IAMthatIAM@7"
 
 # Function to log messages
 log() {
@@ -14,49 +16,24 @@ install_package() {
     log "Downloading $package_url"
     wget -q --show-progress "$package_url"
     log "Installing $(basename $package_url)"
-    sudo dpkg --install $(basename $package_url)
+    expect -c "
+        spawn sudo dpkg --install $(basename $package_url)
+        expect {
+            \"*?*\" { send \"\r\"; exp_continue }
+        }
+    "
     log "Fixing broken dependencies"
-    sudo apt-get install --fix-broken -y
+    expect -c "
+        spawn sudo apt-get install --fix-broken -y
+        expect {
+            \"*?*\" { send \"\r\"; exp_continue }
+        }
+    "
     rm $(basename $package_url)
-}
-
-# Function to get username from user
-get_username() {
-    while true; do
-        read -p "Enter username: " username
-        if [[ "$username" =~ ^[a-z_][a-z0-9_-]*$ ]]; then
-            break
-        else
-            echo "Invalid username. Please use only lowercase letters, numbers, underscores, and hyphens."
-        fi
-    done
-}
-
-# Function to get password from user with confirmation
-get_password() {
-    while true; do
-        read -s -p "Enter password for user $username: " password
-        echo
-        read -s -p "Confirm password: " password_confirm
-        echo
-        if [ "$password" = "$password_confirm" ]; then
-            if [ ${#password} -ge 8 ]; then
-                break
-            else
-                echo "Password must be at least 8 characters long. Please try again."
-            fi
-        else
-            echo "Passwords do not match. Please try again."
-        fi
-    done
 }
 
 # Installation steps
 log "Starting installation"
-
-# Get username and password from user
-get_username
-get_password
 
 # Create user
 log "Creating user '$username'"
@@ -69,7 +46,12 @@ install_package "$chrome_remote_desktop_url"
 
 # Install XFCE desktop environment
 log "Installing XFCE desktop environment"
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes -y xfce4 desktop-base dbus-x11 xscreensaver
+expect -c "
+    spawn sudo DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes -y xfce4 desktop-base dbus-x11 xscreensaver
+    expect {
+        \"*?*\" { send \"\r\"; exp_continue }
+    }
+"
 
 # Set up Chrome Remote Desktop session
 log "Setting up Chrome Remote Desktop session"
@@ -80,6 +62,16 @@ log "Disabling lightdm service"
 sudo systemctl disable lightdm.service
 
 # Install Firefox ESR
-sudo apt update
-sudo apt install firefox
+expect -c "
+    spawn sudo apt update
+    expect {
+        \"*?*\" { send \"\r\"; exp_continue }
+    }
+"
+expect -c "
+    spawn sudo apt install firefox -y
+    expect {
+        \"*?*\" { send \"\r\"; exp_continue }
+    }
+"
 log "Installation completed successfully"
