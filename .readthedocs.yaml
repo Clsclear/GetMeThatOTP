@@ -16,3 +16,7 @@ python:
 
 sphinx:
   configuration: docs/conf.py
+
+# Add this section
+branches:
+  - main  # or whatever your default branch name is
